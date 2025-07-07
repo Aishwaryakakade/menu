@@ -1,5 +1,6 @@
 import React from "react";
 import { GiDiamonds } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 type CocktailCardProps = {
   id?: string | number;
@@ -7,9 +8,6 @@ type CocktailCardProps = {
   image?: never;
   info?: string;
   glass?: string;
-  ingredient_one: string;
-  ingredient_two: string;
-  ingredient_three: string;
 };
 
 const CocktailCard: React.FC<CocktailCardProps> = ({
@@ -18,33 +16,27 @@ const CocktailCard: React.FC<CocktailCardProps> = ({
   image,
   info,
   glass,
-  ingredient_one,
-  ingredient_two,
-  ingredient_three,
 }) => {
   return (
     <article className="border-2 rounded-xl">
       <div className="m-0.5 border-l-8 rounded-lg h-52 w-auto p-2 flex flex-row  items-center justify-between">
-        <div className="flex flex-col text-2xl text-[#446161] justify-center font-semibold">
+        <div className="flex flex-col text-2xl text-[#446161] justify-center font-semibold w-[60px] ">
           {name}
         </div>
         <GiDiamonds />
-        <div className="flex flex-col text-[#446161] justify-center text-sm">
-          <p>{ingredient_one}</p>
-          <p>{ingredient_two}</p>
-          <p>{ingredient_three}</p>
-          <div className="text-lg font-bold mt-2 text-[#446161]">
-            $
-            {id?.toString().substring(3, 4) === "0"
-              ? "9"
-              : id?.toString().substring(3, 4)}
-          </div>
+        <div className="flex flex-col text-[#446161] justify-center text-sm w-[180px]">
+          <p>
+            A {info} drink served in {glass}
+          </p>
+          <p></p>
+
+          <Link to={`/cocktail/${id}`}>Explore</Link>
         </div>
         <div>
           <img
             src={image}
             alt={name}
-            style={{ height: "196px" }}
+            style={{ height: "196px", width: "170px" }}
             className="rounded-md"
           />
         </div>

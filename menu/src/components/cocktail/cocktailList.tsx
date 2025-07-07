@@ -1,5 +1,6 @@
 import React from "react";
 import CocktailCard from "./cocktailCard";
+
 type Drink = {
   idDrink: string | number;
   strDrink: string;
@@ -25,7 +26,6 @@ const CocktailList: React.FC<CocktailListProps> = ({ drinks, searchTerm }) => {
   }
 
   const formattedDrinks = drinks.map((drink) => {
-    console.log(drink);
     const {
       idDrink,
       strDrink,

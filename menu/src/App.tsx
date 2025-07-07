@@ -10,10 +10,24 @@ import {
   NewsLetter,
   HomeLayout,
 } from "./pages";
-import { loader as landingLoader } from "./pages/Landing";
-import SinglePageError from "./pages/SinglepageError";
 
-// Defining routes
+import { loader as landingLoader } from "./pages/Landing";
+import { loader as singleCocktailLoader } from "./pages/Cocktail";
+import { action as newsLetterAction } from "./pages/NewsLetter";
+
+import SinglePageError from "./pages/SinglepageError";
+//Query imports
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+    },
+  },
+});
+// Defining routes singleCocktailLoader
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,13 +44,14 @@ const router = createBrowserRouter([
         errorElement: (
           <SinglePageError message="If you’re thirsty and you know it… refresh the page!" />
         ),
-        loader: landingLoader,
+        loader: landingLoader(queryClient),
       },
       {
-        path: "cocktail",
+        path: "cocktail/:id",
         errorElement: (
           <SinglePageError message="You’ve officially out-sipped our menu. Try a different mix!" />
         ),
+        loader: singleCocktailLoader(queryClient),
         element: <Cocktail />,
       },
       {
@@ -51,6 +66,7 @@ const router = createBrowserRouter([
         errorElement: (
           <SinglePageError message="Our cocktails ghosted us… try shaking things up again" />
         ),
+        action: newsLetterAction,
         element: <NewsLetter />,
       },
     ],
@@ -60,7 +76,12 @@ const router = createBrowserRouter([
 ]);
 
 const App: React.FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 };
 
 export default App;

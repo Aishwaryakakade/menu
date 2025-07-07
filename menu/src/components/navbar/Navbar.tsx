@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
       <div className="flex items-center justify-between h-full relative">
         {/* Logo on the left */}
         <span className="logo text-xl font-bold absolute left-0 top-1/2 -translate-y-1/2">
-          MixMaster
+          Salford & Co.
         </span>
 
         {/* NavLinks centered */}
